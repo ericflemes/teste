@@ -1,0 +1,49 @@
+<h1>
+    <span>
+        <img class="logo" src="images/jogos/ragnarok/logo.png"/>
+    </span>
+</h1>
+
+<div class="row">
+    <?php foreach ($this->produtos as $value) : ?>
+        <div class="col-sm-3">
+            <div class="col-item">
+                <div class="photo">
+                    <img src="<?php echo $value['img']; ?>"  alt="a">
+                </div>
+                <div class="info">
+                    <div class="row">
+                        <div class="price col-md-6">
+                            <h5>
+                                <?php echo $value['nome']; ?>
+                            </h5>
+                            <h5 class="price-text-color">
+                                <b>R$<?php echo $value['preco']; ?></b>
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="separator clear-left">
+                        <p class="btn-add">
+                            <i class="glyphicon glyphicon-shopping-cart"></i>
+                            <a href="javascript:void(0)" onclick="addCart('<?php echo $value['cod_produto']; ?>')" id="btn-comprar" class="hidden-sm">Comprar</a>
+                        </p>
+                        <p class="btn-details">
+                            <i class="glyphicon glyphicon-list"></i>
+                            <a href="" class="hidden-sm">Detalhes</a>
+                        </p>
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<p class="rodape-pg">
+    <br>
+
+    Level Up! Interactive S.A.
+    CNPJ: 06.142.151/0001-60
+    Avenida Jabaquara, 3.060 - 8º andar - Mirandópolis - São Paulo - SP Cep 04046-500       
+</p>

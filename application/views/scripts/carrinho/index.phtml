@@ -1,0 +1,117 @@
+<script>
+    $("p.campo_carrinho").find("input").focusout(function (e) {
+        var id = $(this).attr("data-id");
+        var div = $(this).attr("id");
+        var valor = $(this).val();
+        if (valor == '' || valor <= 0) {
+            removerCarrinho(id, 1);
+            carrinho_();
+        }
+        valor = valor.replace(/[^\d]+/g, '');
+        $("#" + div).val(valor);
+
+    });
+
+</script>
+<div class="row">
+    <h3>Meu Carrinho</h3>
+    <a href="javascript:void(0);" onclick="link('index/principal')" class="btn btn-warning">
+        <span class="glyphicon glyphicon-shopping-cart"></span> Escolher mais produtos
+    </a>
+    <?php if (!empty($this->carrinho)): ?>
+        <table class="table table-hover" style="border: solid 1px #e5e5e5; margin-top: 10px;">
+            <thead>
+                <tr bgcolor="#e5e5e5">
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th class="text-center">Preço</th>
+                    <th class="text-center">Total</th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($this->carrinho as $value) : ?>
+                    <tr id="prod_<?php echo $value['cod_produto']; ?>">
+                        <td class="col-sm-8 col-md-6">
+                            <div class="media">
+                                <a class="thumbnail pull-left" href="#"> 
+                                    <img class="media-object" src="<?php echo $value['img']; ?>" style="width: 72px; height: 72px;"> 
+                                </a>
+                                <div class="media-body">
+                                    <h4 class="media-heading">
+                                        <a href="#"><?php echo $value['nome']; ?></a>
+                                    </h4>
+                                    <h5 class="media-heading">
+                                        <?php echo $value['descricao']; ?>
+                                        <a href="#"></a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                            <p class="campo_carrinho">
+                                <input type="text" class="form-control text-center" onkeyup="calcular_subtotal('<?php echo $value['cod_produto']; ?>')" id="qtd_<?php echo $value['cod_produto']; ?>" data-id="<?php echo $value['cod_produto']; ?>" value="<?php echo $value['quantidade']; ?>"/>
+                            </p>
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-center">
+                            <strong>R$ <?php echo number_format($value['preco'], 2, ",", "."); ?></strong>
+                        </td>
+                        <td class="col-sm-1 col-md-1 text-center" id="subtotal_<?php echo $value['cod_produto']; ?>">
+                            <strong>R$ <?php echo number_format($value['preco_total'], 2, ",", "."); ?></strong>
+                        </td>
+                        <td class="col-sm-1 col-md-1">
+                            <button type="button" class="btn btn-danger" onclick="removerCarrinho('<?php echo $value['cod_produto']; ?>', '')">
+                                <span class="glyphicon glyphicon-remove"></span> Remove
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td>   </td>
+                    <td>   </td>
+                    <td>   </td>
+                    <td><h5>Subtotal</h5></td>
+                    <td class="text-right">
+                        <h5><strong id="totalCompra"><?php echo $this->totalCarrinho; ?></strong></h5>
+                    </td>
+                </tr>
+                <tr>
+                    <td>   </td>
+                    <td>   </td>
+                    <td>   </td>
+                    <td><h3>Total</h3></td>
+                    <td class="text-right">
+                        <h3><strong id="totalCompra2"><?php echo $this->totalCarrinho; ?></strong></h3>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a href="javascript:void(0);" onclick="link('index/principal')" class="btn btn-default">
+                            <span class="glyphicon glyphicon-shopping-cart"></span> Continuar Comprando
+                        </a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success">
+                            Pagar <span class="glyphicon glyphicon-play"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <table class="table table-hover" id="carinho_vazio" style="border: solid 1px #e5e5e5; margin-top: 10px;">
+            <tr>
+                <td class="text-center">
+                    Sua cesta está vazia</br>
+                    <a href="javascript:void(0)" onclick="link('index/principal')">Voltar para página inicial e escolha outros produtos.</a>
+                </td>
+            </tr>
+        </table>
+    <?php endif; ?>
+    <a href="javascript:void(0);" onclick="link('index/principal')" class="btn btn-warning">
+        <span class="glyphicon glyphicon-shopping-cart"></span> Escolher mais produtos
+    </a>
+</div>
